@@ -43,4 +43,35 @@ class Welcome extends React.Component{
     </div>
     }
 }
-ReactDOM.render(<Welcome name='Michel'>Bonjour tout le monde</Welcome>, document.querySelector('#app'));
+class Clock extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {date: new Date()}
+        this.timer = null
+    }
+    componentDidMount(){
+        this.timer = window.setInterval(this.tick.bind(this), 1000)
+    }
+    componentwillUnmount(){
+        window.clearInterval(this.timer)
+
+    }
+    tick(){
+        this.setState({date: new Date()})
+    }
+    render() {
+        const date = new Date()
+        return <div>
+            Il est {this.state.date.toLocaleDateString()} {this.state.date.toLocaleTimeString()}
+        </div>
+        }
+}
+function Home(){
+    return <div>
+        <Welcome name = "Dorothée"/>
+        <Welcome name = "Jean"/>
+        <Clock/>
+    </div>
+}
+
+ReactDOM.render(<Home/>, document.querySelector('#app'));
