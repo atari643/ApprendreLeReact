@@ -60,17 +60,43 @@ class Clock extends React.Component{
         this.setState({date: new Date()})
     }
     render() {
-        const date = new Date()
         return <div>
             Il est {this.state.date.toLocaleDateString()} {this.state.date.toLocaleTimeString()}
         </div>
         }
+}
+class Incrementer extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {n:props.start}
+        this.timer = null
+    }
+    componentDidMount(){
+        this.timer=window.setInterval(this.increment.bind(this), 1000)
+    }
+    componentwillUnmount(){
+        window.clearInterval(this.timer)
+    }
+    increment(){
+        this.setState(function(state, props){
+            return{n: state.n+props.step}
+        })
+    }
+    render(){
+        return <div> Valeur : {this.state.n}
+            </div>
+    }
+}
+Incrementer.defaultProps = {
+    start:0,
+    step: 1
 }
 function Home(){
     return <div>
         <Welcome name = "Dorothée"/>
         <Welcome name = "Jean"/>
         <Clock/>
+        <Incrementer start={10}/>
     </div>
 }
 
